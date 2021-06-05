@@ -5,6 +5,13 @@ const app = express();
 
 app.use(express.json());
 
+const schema1 = Joi.object({
+    name: Joi.string().min(3).required()
+});
+
+let a = schema1.validate({name :1});
+console.log(a);
+
 const courses = [
     { id: 1, name : 'course1' },
     { id: 2, name : 'course2' },
@@ -32,7 +39,7 @@ app.post('/api/courses',(req,res)=>{
         name: Joi.string().min(3).required()
     };
 
-    const result = Joi.validate(req.body,schema);
+    const result = schema.validate(req.body);
 
     if(result.error){
         //404 Bad request
